@@ -1,0 +1,222 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.bg-bcp-deep {
+    background: #0a1e3d;
+}
+
+.bg-bcp-mid {
+    background: #1a3a6b;
+}
+
+.bg-bcp-light {
+    background: #eef4fc;
+}
+
+.text-bcp-sky {
+    color: #4fc3f7;
+}
+
+.border-bcp-sky {
+    border-color: #4fc3f7;
+}
+
+.bg-bcp-sky {
+    background: #4fc3f7;
+}
+
+.glass-dark {
+    background: rgba(10, 30, 61, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.btn-sky {
+    background: linear-gradient(135deg, #4fc3f7, #29b6f6);
+    color: #0a1e3d;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 4px 20px rgba(79, 195, 247, 0.3);
+}
+
+.btn-sky:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 20px 40px -8px rgba(79, 195, 247, 0.5);
+}
+
+.nav-link {
+    position: relative;
+    transition: color 0.3s;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #4fc3f7;
+    transition: width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.nav-link:hover {
+    color: #4fc3f7;
+}
+
+.about-hero {
+    background: linear-gradient(135deg, #0a1e3d 0%, #1a3a6b 50%, #0a1e3d 100%);
+    padding: 140px 0 80px;
+    position: relative;
+    overflow: hidden;
+}
+
+.about-hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(79, 195, 247, 0.08), transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.about-hero::after {
+    content: '';
+    position: absolute;
+    bottom: -40%;
+    left: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(41, 182, 246, 0.06), transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.about-image-main {
+    background-image: url('../stock.jpg');
+    background-size: cover;
+    background-position: center;
+    min-height: 420px;
+    border-radius: 28px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+    transition: transform 0.6s;
+}
+
+.about-image-main:hover {
+    transform: scale(1.01);
+}
+
+.core-card {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 2rem 1.75rem;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(79, 195, 247, 0.08);
+    position: relative;
+    height: 100%;
+    display: block;
+}
+
+.core-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px -8px rgba(10, 30, 61, 0.12);
+    border-color: rgba(79, 195, 247, 0.2);
+}
+
+.core-card .core-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(79, 195, 247, 0.12), rgba(79, 195, 247, 0.04));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    color: #4fc3f7;
+    margin-bottom: 1.25rem;
+    flex-shrink: 0;
+}
+
+.core-card h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0a1e3d;
+    margin-bottom: 0.75rem;
+    display: block;
+}
+
+.core-card p {
+    color: #1a3a6b;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    display: block;
+}
+
+.stat-number {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #4fc3f7;
+    display: inline-block;
+}
+
+.footer-link {
+    transition: color 0.3s;
+}
+
+.footer-link:hover {
+    color: #4fc3f7;
+}
+
+.float-shape {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.04;
+    pointer-events: none;
+}
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.delay-1 {
+    animation-delay: 0.1s;
+}
+
+.delay-2 {
+    animation-delay: 0.2s;
+}
+
+.delay-3 {
+    animation-delay: 0.3s;
+}

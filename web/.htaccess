@@ -1,0 +1,23 @@
+# .htaccess - LMS Enrollment Pretty URLs
+
+Options -Indexes
+RewriteEngine On
+
+# Keep implementation files out of the public URL space.
+RewriteRule ^(?:classes|views|tools|tests)(?:/|$) - [F,L]
+
+# Allow real files and directories
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Root → pages/index.html
+RewriteRule ^$ pages/index.html [L]
+
+# /contact.php → /pages/contact.php (and all other .php)
+RewriteCond %{REQUEST_URI} ^(.*/)[^/]+$
+RewriteRule ^([a-zA-Z0-9_-]+\.php)$ %1pages/$1 [R=302,L]
+
+# /about.html → /pages/about.html (and all other .html)
+RewriteCond %{REQUEST_URI} ^(.*/)[^/]+$
+RewriteRule ^([a-zA-Z0-9_-]+\.html)$ %1pages/$1 [R=302,L]
