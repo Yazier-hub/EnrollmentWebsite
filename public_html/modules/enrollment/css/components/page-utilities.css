@@ -1,0 +1,133 @@
+/* Shared presentation utilities extracted from page templates. */
+body [class].u-background-e9ecef-9177 { background:#e9ecef; }
+body [class].u-color-333-7574 { color:#333; }
+body [class].u-display-inline-block-6a19 { display:inline-block; }
+body [class].u-margin-top-10px-5371 { margin-top:10px; }
+body [class].u-padding-top-10px-8ae9 { padding-top:10px; }
+body [class].u-border-top-2px-solid-dee2e6-6cf2 { border-top:2px solid #dee2e6; }
+body [class].u-text-align-left-200a { text-align:left; }
+body [class].u-max-width-200px-3831 { max-width:200px; }
+body [class].u-font-size-12px-6b9c { font-size:12px; }
+body [class].u-padding-4px-12px-6ab3 { padding:4px 12px; }
+body [class].u-color-856404-d0e1 { color:#856404; }
+body [class].u-color-28a745-41c2 { color:#28a745; }
+body [class].u-color-17a2b8-ba60 { color:#17a2b8; }
+body [class].u-color-dc3545-0b27 { color:#dc3545; }
+body [class].u-display-none-cb45 { display:none; }
+body [class].u-margin-top-15px-886e { margin-top:15px; }
+body [class].u-background-f8f9fa-7c6e { background:#f8f9fa; }
+body [class].u-padding-15px-3607 { padding:15px; }
+body [class].u-border-radius-4px-b6a1 { border-radius:4px; }
+body [class].u-border-1px-solid-e9ecef-6d6f { border:1px solid #e9ecef; }
+body [class].u-margin-5px-0-8ac3 { margin:5px 0; }
+body [class].u-font-weight-normal-9aa7 { font-weight:normal; }
+body [class].u-cursor-pointer-b202 { cursor:pointer; }
+body [class].u-color-6c757d-823f { color:#6c757d; }
+body [class].u-margin-top-20px-3ae1 { margin-top:20px; }
+body [class].u-border-radius-8px-a503 { border-radius:8px; }
+body [class].u-padding-20px-7fa5 { padding:20px; }
+body [class].u-color-var-navy-a138 { color:var(--navy); }
+body [class].u-margin-15px-0-10px-d114 { margin:15px 0 10px; }
+body [class].u-font-size-15px-3dd9 { font-size:15px; }
+body [class].u-margin-20px-0-10px-c24d { margin:20px 0 10px; }
+body [class].u-margin-left-10px-6106 { margin-left:10px; }
+body [class].u-font-size-13px-3044 { font-size:13px; }
+body [class].u-color-666-909c { color:#666; }
+body [class].u-margin-left-auto-8345 { margin-left:auto; }
+body [class].u-justify-content-flex-start-important-908e { justify-content:flex-start !important; }
+body [class].u-text-align-left-important-a3cc { text-align:left !important; }
+body [class].u-align-items-flex-start-important-26f6 { align-items:flex-start !important; }
+body [class].u-width-100-6d56 { width:100%; }
+body [class].u-margin-0-0-4px-0-important-0e20 { margin:0 0 4px 0 !important; }
+body [class].u-margin-0-important-d323 { margin:0 !important; }
+body [class].u-font-size-14px-0cf0 { font-size:14px; }
+body [class].u-margin-0-1386 { margin:0; }
+body [class].u-display-flex-f7db { display:flex; }
+body [class].u-gap-10px-114b { gap:10px; }
+body [class].u-flex-wrap-wrap-9012 { flex-wrap:wrap; }
+body [class].u-color-999-d522 { color:#999; }
+body [class].u-font-size-64px-2963 { font-size:64px; }
+body [class].u-margin-bottom-15px-9ab9 { margin-bottom:15px; }
+body [class].u-margin-bottom-10px-a740 { margin-bottom:10px; }
+body [class].u-margin-bottom-20px-3019 { margin-bottom:20px; }
+body [class].u-justify-content-center-9b54 { justify-content:center; }
+body [class].u-justify-content-space-between-daae { justify-content:space-between; }
+body [class].u-align-items-center-1e2c { align-items:center; }
+body [class].u-gap-15px-7d09 { gap:15px; }
+body [class].u-color-b91c1c-5387 { color:#b91c1c; }
+body [class].u-display-inline-5677 { display:inline; }
+body [class].u-padding-10px-20px-cc5c { padding:10px 20px; }
+body [class].u-font-weight-600-e634 { font-weight:600; }
+body [class].u-font-size-2-5rem-b178 { font-size:2.5rem; }
+body [class].u-dynamic-border-left-color { border-left-color:var(--page-border-left-color); }
+body [class].u-dynamic-color { color:var(--page-color); }
+body [class].u-font-size-3rem-7d23 { font-size:3rem; }
+body [class].u-text-transform-uppercase-5f7a { text-transform:uppercase; }
+body [class].u-align-items-flex-start-b505 { align-items:flex-start; }
+body [class].u-color-94a3b8-8cd4 { color:#94a3b8; }
+body [class].u-margin-left-8px-c3f8 { margin-left:8px; }
+body [class].u-font-size-10px-bcf8 { font-size:10px; }
+body [class].u-border-left-4px-solid-f59e0b-6423 { border-left:4px solid #f59e0b; }
+body [class].u-border-left-4px-solid-2a5c9e-491e { border-left:4px solid #2a5c9e; }
+body [class].u-font-size-24px-fcc5 { font-size:24px; }
+body [class].u-flex-1-da5c { flex:1; }
+body [class].u-margin-top-8px-d431 { margin-top:8px; }
+body [class].u-padding-10px-6b28 { padding:10px; }
+body [class].u-border-radius-5px-1ce3 { border-radius:5px; }
+body [class].u-border-1px-solid-c8e6c9-1a3b { border:1px solid #c8e6c9; }
+body [class].u-max-width-600px-3e9d { max-width:600px; }
+body [class].u-display-grid-998b { display:grid; }
+body [class].u-grid-template-columns-100px-1fr-a8d2 { grid-template-columns:100px 1fr; }
+body [class].u-gap-5px-445f { gap:5px; }
+body [class].u-padding-2px-8px-1e18 { padding:2px 8px; }
+body [class].u-border-radius-3px-5dae { border-radius:3px; }
+body [class].u-color-2a5c9e-2521 { color:#2a5c9e; }
+body [class].u-display-block-fa9a { display:block; }
+body [class].u-margin-top-5px-351b { margin-top:5px; }
+body [class].u-color-4a90d9-64f8 { color:#4a90d9; }
+body [class].u-color-0f2a4e-9277 { color:#0f2a4e; }
+body [class].u-text-align-right-f6e3 { text-align:right; }
+body [class].u-color-5a7fa8-c092 { color:#5a7fa8; }
+body [class].u-font-weight-bold-0a15 { font-weight:bold; }
+body [class].u-background-f59e0b-a76e { background:#f59e0b; }
+body [class].u-color-white-6304 { color:white; }
+body [class].u-color-92400e-9a2b { color:#92400e; }
+body [class].u-background-ef4444-82b6 { background:#ef4444; }
+body [class].u-color-991b1b-2174 { color:#991b1b; }
+body [class].u-color-1a3c6e-5e20 { color:#1a3c6e; }
+body [class].u-font-style-italic-4ddb { font-style:italic; }
+body [class].u-font-size-16px-2592 { font-size:16px; }
+body [class].u-padding-10px-30px-18b0 { padding:10px 30px; }
+body [class].u-max-width-800px-c231 { max-width:800px; }
+body [class].u-max-width-500px-5ab1 { max-width:500px; }
+body [class].u-max-width-900px-10ef { max-width:900px; }
+body [class].u-color-fff-4eb2 { color:#fff; }
+body [class].u-margin-left-6px-da47 { margin-left:6px; }
+body [class].u-margin-10px-0-cca1 { margin:10px 0; }
+body [class].u-dynamic-width { width:var(--page-width); }
+body [class].u-dynamic-background { background:var(--page-background); }
+body [class].u-align-items-flex-end-2e00 { align-items:flex-end; }
+body [class].u-background-white-29c1 { background:white; }
+body [class].u-box-shadow-0-2px-4px-rgba-26-60-110-0-08-0dff { box-shadow:0 2px 4px rgba(26,60,110,0.08); }
+body [class].u-grid-template-columns-repeat-auto-fill-minmax-250px-1fr-57dd { grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); }
+body [class].u-background-f0f7ff-085b { background:#f0f7ff; }
+body [class].u-padding-10px-15px-f531 { padding:10px 15px; }
+body [class].u-border-radius-6px-9aae { border-radius:6px; }
+body [class].u-border-left-4px-solid-0f2a4e-a801 { border-left:4px solid #0f2a4e; }
+body [class].u-background-e8f0fe-86ba { background:#e8f0fe; }
+body [class].u-border-1px-solid-b8d4e8-1032 { border:1px solid #b8d4e8; }
+body [class].u-background-4a90d9-8491 { background:#4a90d9; }
+body [class].u-border-top-2px-solid-e8f4fd-fd6c { border-top:2px solid #e8f4fd; }
+body [class].u-gap-8px-304c { gap:8px; }
+body [class].u-grid-column-1-1-b452 { grid-column:1 / -1; }
+body [class].u-justify-content-flex-end-36b7 { justify-content:flex-end; }
+body [class].u-border-left-4px-solid-1a3c6e-5612 { border-left:4px solid #1a3c6e; }
+body [class].u-margin-bottom-5px-980c { margin-bottom:5px; }
+body [class].u-font-weight-500-1e29 { font-weight:500; }
+body [class].u-padding-8px-12px-6755 { padding:8px 12px; }
+body [class].u-border-2px-solid-b8d4e8-93cb { border:2px solid #b8d4e8; }
+body [class].u-padding-top-15px-2ca4 { padding-top:15px; }
+body [class].u-border-top-1px-solid-e8f4fd-ee0f { border-top:1px solid #e8f4fd; }
+body [class].u-background-d4edda-c317 { background:#d4edda; }
+body [class].u-color-155724-8d78 { color:#155724; }
+body [class].u-margin-bottom-0-e7ec { margin-bottom:0; }

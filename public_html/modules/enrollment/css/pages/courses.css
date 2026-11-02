@@ -1,0 +1,511 @@
+/* ============================================================
+       COURSES MANAGEMENT — Blue & Sky Blue Theme
+       ============================================================ */
+
+    :root {
+        --navy:        #1a3c6e;
+        --navy-dark:   #0f2a4e;
+        --blue:        #2a5c9e;
+        --blue-mid:    #3a7bc8;
+        --sky:         #4a90d9;
+        --sky-light:   #6aa8e0;
+        --sky-pale:    #a8d0f0;
+        --sky-bg:      #e8f4fd;
+        --sky-bg-soft: #f0f7ff;
+        --sky-border:  #b8d4e8;
+        --sky-muted:   #5a7fa8;
+    }
+
+    .dashboard-subtitle {
+        color: var(--sky-muted);
+        font-size: 14px;
+        margin-bottom: 0;
+    }
+
+    /* ---------- STATS ---------- */
+    .stats-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .stat-card {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(26, 60, 110, 0.08);
+        text-align: center;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        border-top: 4px solid var(--navy);
+    }
+
+    .stat-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(26, 60, 110, 0.15);
+    }
+
+    .stat-card .stat-number {
+        font-size: 28px;
+        font-weight: 700;
+        display: block;
+        color: var(--navy);
+    }
+
+    .stat-card .stat-label {
+        font-size: 13px;
+        color: var(--sky-muted);
+        margin-top: 5px;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+    }
+
+    /* Stat accent variations — all blue tones */
+    .stat-total    { border-top-color: var(--navy); }
+    .stat-total .stat-number    { color: var(--navy); }
+
+    .stat-sections { border-top-color: var(--blue); }
+    .stat-sections .stat-number { color: var(--blue); }
+
+    .stat-students { border-top-color: var(--sky); }
+    .stat-students .stat-number { color: var(--sky); }
+
+    /* ---------- POPULAR COURSES ---------- */
+    .popular-courses {
+        background: white;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(26, 60, 110, 0.08);
+        margin-bottom: 20px;
+    }
+
+    .popular-courses h3 {
+        color: var(--navy);
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid var(--sky-bg);
+        font-size: 16px;
+    }
+
+    .popular-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+    }
+
+    .popular-item {
+        background: var(--sky-bg-soft);
+        padding: 15px;
+        border-radius: 6px;
+        border-left: 4px solid var(--navy);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .popular-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(26, 60, 110, 0.12);
+    }
+
+    .popular-item .course-name {
+        font-weight: 700;
+        color: var(--navy);
+        font-size: 15px;
+    }
+
+    .popular-item .course-stats {
+        font-size: 13px;
+        color: var(--sky-muted);
+        margin-top: 5px;
+    }
+
+    .popular-item .course-stats span {
+        font-weight: 700;
+        color: var(--blue);
+    }
+
+    /* ---------- ALERTS ---------- */
+    .alert {
+        padding: 12px 20px;
+        border-radius: 4px;
+        margin-bottom: 20px;
+    }
+
+    .alert-success {
+        background: #d4e8fc;
+        color: var(--navy);
+        border: 1px solid var(--sky-pale);
+    }
+
+    .alert-danger {
+        background: #dce8f5;
+        color: var(--navy-dark);
+        border: 1px solid var(--sky-pale);
+    }
+
+    .alert-info {
+        background: var(--sky-bg);
+        color: var(--navy);
+        border: 1px solid var(--sky-border);
+    }
+
+    .alert-warning {
+        background: #e8f0fe;
+        color: var(--navy);
+        border: 1px solid var(--sky-light);
+    }
+
+    /* ---------- TABLE CONTAINER ---------- */
+    .courses-table-container {
+        background: white;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(26, 60, 110, 0.08);
+        overflow-x: auto;
+    }
+
+    .table-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid var(--sky-bg);
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .table-header .title {
+        font-weight: 700;
+        font-size: 16px;
+        color: var(--navy);
+    }
+
+    .badge-count {
+        background: var(--navy);
+        color: white;
+        padding: 3px 14px;
+        border-radius: 12px;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    /* ---------- TABLE ---------- */
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+    }
+
+    .table th {
+        background: var(--sky-bg-soft);
+        padding: 12px;
+        text-align: left;
+        font-weight: 600;
+        font-size: 12px;
+        text-transform: uppercase;
+        color: var(--sky-muted);
+        border-bottom: 2px solid var(--sky-border);
+        white-space: nowrap;
+        letter-spacing: 0.3px;
+    }
+
+    .table td {
+        padding: 12px;
+        border-bottom: 1px solid var(--sky-bg);
+        vertical-align: middle;
+        color: var(--navy);
+    }
+
+    .table tbody tr {
+        transition: background 0.2s ease;
+    }
+
+    .table tbody tr:hover {
+        background: var(--sky-bg-soft);
+    }
+
+    .table .text-center {
+        text-align: center;
+        padding: 30px 20px;
+        color: var(--sky-muted);
+    }
+
+    .table .text-center a {
+        color: var(--blue);
+        font-weight: 600;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    .table .text-center a:hover {
+        color: var(--navy);
+    }
+
+    /* ---------- BADGES ---------- */
+    .table .badge {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.2px;
+    }
+
+    .badge-success {
+        background: #d4e8fc;
+        color: var(--navy);
+        border: 1px solid var(--sky-pale);
+    }
+
+    .badge-warning {
+        background: #e8f0fe;
+        color: var(--blue);
+        border: 1px solid var(--sky-border);
+    }
+
+    .badge-info {
+        background: var(--sky-bg);
+        color: var(--navy);
+        border: 1px solid var(--sky-border);
+    }
+
+    /* ---------- ACTION BUTTONS ---------- */
+    .action-buttons {
+        display: flex;
+        gap: 5px;
+        flex-wrap: wrap;
+    }
+
+    /* ---------- BUTTONS ---------- */
+    .btn {
+        padding: 8px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.2s ease;
+        text-decoration: none;
+        display: inline-block;
+        font-weight: 500;
+        font-family: inherit;
+        line-height: 1.4;
+    }
+
+    .btn:hover {
+        transform: translateY(-1px);
+    }
+
+    .btn-sm {
+        padding: 4px 10px;
+        font-size: 12px;
+        border-radius: 4px;
+    }
+
+    .btn-primary {
+        background: var(--navy);
+        color: white;
+    }
+    .btn-primary:hover { background: var(--blue); }
+
+    .btn-success {
+        background: var(--blue);
+        color: white;
+    }
+    .btn-success:hover { background: var(--navy); }
+
+    .btn-danger {
+        background: var(--navy-dark);
+        color: white;
+    }
+    .btn-danger:hover { background: var(--navy); }
+    .btn-danger:disabled {
+        background: var(--sky-muted);
+        opacity: 0.55;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    .btn-warning {
+        background: var(--sky);
+        color: white;
+    }
+    .btn-warning:hover { background: var(--blue-mid); }
+
+    .btn-secondary {
+        background: var(--sky-muted);
+        color: white;
+    }
+    .btn-secondary:hover { background: var(--blue); }
+
+    .btn-info {
+        background: var(--sky-light);
+        color: white;
+    }
+    .btn-info:hover { background: var(--sky); }
+
+    /* ---------- MODAL ---------- */
+    .modal {
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(26, 60, 110, 0.55);
+        overflow-y: auto;
+        display: none;
+    }
+
+    .modal-content {
+        background: white;
+        margin: 5% auto;
+        padding: 30px;
+        width: 90%;
+        max-width: 550px;
+        border-radius: 10px;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: 0 20px 60px rgba(26, 60, 110, 0.3);
+        animation: modalSlideIn 0.25s ease;
+    }
+
+    @keyframes modalSlideIn {
+        from { opacity: 0; transform: translateY(-20px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid var(--sky-bg);
+    }
+
+    .modal-header h2 {
+        color: var(--navy);
+        margin: 0;
+        font-size: 20px;
+    }
+
+    .close {
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+        color: var(--sky-muted);
+        transition: color 0.2s ease;
+        line-height: 1;
+    }
+
+    .close:hover {
+        color: var(--navy);
+    }
+
+    /* ---------- COURSE FORM ---------- */
+    .course-form .form-group {
+        margin-bottom: 15px;
+    }
+
+    .course-form label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 600;
+        color: var(--navy);
+        font-size: 13px;
+    }
+
+    .course-form label .required {
+        color: var(--navy-dark);
+        font-weight: 700;
+    }
+
+    .course-form input,
+    .course-form textarea {
+        width: 100%;
+        padding: 9px 12px;
+        border: 2px solid var(--sky-border);
+        border-radius: 5px;
+        font-size: 14px;
+        font-family: inherit;
+        color: var(--navy);
+        background: white;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        box-sizing: border-box;
+    }
+
+    .course-form input::placeholder {
+        color: var(--sky-muted);
+        opacity: 0.7;
+    }
+
+    .course-form input:focus,
+    .course-form textarea:focus {
+        border-color: var(--navy);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(74, 144, 217, 0.15);
+    }
+
+    .course-form small {
+        color: var(--sky-muted);
+        font-size: 12px;
+        display: block;
+        margin-top: 4px;
+    }
+
+    /* ---------- FORM ACTIONS ---------- */
+    .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 20px;
+        padding-top: 15px;
+        border-top: 1px solid var(--sky-bg);
+        flex-wrap: wrap;
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 768px) {
+        .modal-content {
+            margin: 10% auto;
+            padding: 20px;
+            width: 95%;
+        }
+
+        .action-buttons {
+            flex-direction: column;
+        }
+
+        .action-buttons .btn {
+            width: 100%;
+            text-align: center;
+        }
+
+        .popular-list {
+            grid-template-columns: 1fr;
+        }
+
+        .stats-container {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .table-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .form-actions {
+            flex-direction: column;
+        }
+
+        .form-actions .btn {
+            width: 100%;
+            text-align: center;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .stats-container {
+            grid-template-columns: 1fr;
+        }
+    }

@@ -1,0 +1,11 @@
+# Local credentials and runtime data
+.env
+.env.*
+!.env.example
+/public_html/modules/enrollment/config/secrets.php
+**/logs/
+**/uploads/
+**/cache/
+# Local database snapshots (keep migrations and test schemas)
+/public_html/database/update/sms-finalized.sql
+/public_html/modules/library/sms_database.sql
