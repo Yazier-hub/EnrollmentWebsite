@@ -1,7 +1,7 @@
 <?php
 
 class Database {
-    // Railway will provide these, otherwise they fall back to your local setup
+    // Shared hosting and environment-variable database settings.
     private $host;
     private $port;
     private $db;
@@ -11,25 +11,31 @@ class Database {
 
     public function __construct() {
         // Load shared environment-variable settings and local defaults.
-        $config = require dirname(__DIR__, 2) . '/db_config.php';
+        $configPath = dirname(__DIR__, 2) . '/db_config.php';
+        if (!is_readable($configPath)) {
+            throw new RuntimeException('Database configuration is missing or unreadable: ' . $configPath);
+        }
+        $config = require $configPath;
+        if (!is_array($config)) {
+            throw new RuntimeException('Database configuration must return an array: ' . $configPath);
+        }
+        foreach (['host', 'port', 'database', 'username', 'password'] as $key) {
+            if (!array_key_exists($key, $config)) {
+                throw new RuntimeException('Database configuration is missing key: ' . $key);
+            }
+        }
         $this->host = $config['host'];
         $this->port = $config['port'];
         $this->db   = $config['database'];
         $this->user = $config['username'];
         $this->pass = $config['password'];
 
-        try {
-            // Added port mapping and upgraded charset to utf8mb4 (standard for modern MySQL)
-            $dsn = "mysql:host={$this->host};port={$this->port};dbname={$this->db};charset=utf8mb4";
-            
-            $this->conn = new PDO($dsn, $this->user, $this->pass);
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            
-            // Forces PDO to return rows as associative arrays by default
-            $this->conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            die("DB Connection failed: " . $e->getMessage());
-        }
+        $dsn = "mysql:host={$this->host};port={$this->port};dbname={$this->db};charset=utf8mb4";
+
+        // Let the caller log failures and choose the appropriate response format.
+        $this->conn = new PDO($dsn, $this->user, $this->pass);
+        $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $this->conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     }
 
     public function getRoles() {

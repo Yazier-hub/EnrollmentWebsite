@@ -1,18 +1,14 @@
 <?php
-// classes/Database.php - FULLY FIXED for `kms` schema
-//
-// FIXES:
-//   • Database name changed from 'lms' to 'kms'   ← CRITICAL
-//   • execute() now binds values with proper PDO types (INT / BOOL / NULL / STR)
+// Enrollment connection settings come from the shared db_config.php.
 
 class Database {
     private static $instance = null;
     private $connection;
-    private $host     = 'localhost';
-    private $username = 'root';
-    private $password = '';
-    private $database = 'payr_bcp';                     // ← FIXED
-    private $port     = 3306;
+    private $host;
+    private $username;
+    private $password;
+    private $database;
+    private $port;
     private $charset  = 'utf8mb4';
     private $options;
     private $connected = false;
@@ -22,8 +18,19 @@ class Database {
     private $transactionLevel = 0;
 
     private function __construct() {
-        // Load shared environment-variable settings and local defaults.
-        $config = require dirname(__DIR__, 4) . '/db_config.php';
+        $configPath = dirname(__DIR__, 4) . '/db_config.php';
+        if (!is_readable($configPath)) {
+            throw new RuntimeException('Database configuration is missing or unreadable: ' . $configPath);
+        }
+        $config = require $configPath;
+        if (!is_array($config)) {
+            throw new RuntimeException('Database configuration must return an array: ' . $configPath);
+        }
+        foreach (['host', 'port', 'database', 'username', 'password'] as $key) {
+            if (!array_key_exists($key, $config)) {
+                throw new RuntimeException('Database configuration is missing key: ' . $key);
+            }
+        }
         $this->host = $config['host'];
         $this->port = $config['port'];
         $this->database = $config['database'];
@@ -67,10 +74,8 @@ class Database {
             $this->lastError = $e->getMessage();
             error_log('Database Connection Error: ' . $e->getMessage());
 
-            if ($this->isDevelopment()) {
-                die("Database Connection Failed: " . $e->getMessage());
-            }
-            die("Database connection error. Please try again later.");
+            // API callers can catch this and return JSON instead of plain text.
+            throw new RuntimeException('Database connection error. Please try again later.', 0, $e);
         }
     }
 

@@ -1,13 +1,44 @@
 <?php
 // auth/login.php
-include "../database/db.php";
+// PHP warnings and database exceptions must not corrupt the JSON response.
+ini_set('display_errors', '0');
+ini_set('log_errors', '1');
+header('Content-Type: application/json; charset=utf-8');
+
+set_exception_handler(function (Throwable $error) {
+    error_log('[auth/login] ' . get_class($error) . ': ' . $error->getMessage()
+        . ' in ' . $error->getFile() . ':' . $error->getLine());
+    http_response_code(500);
+    echo json_encode([
+        'success' => false,
+        'locked' => false,
+        'message' => 'Login service is unavailable. Please contact the administrator.',
+    ]);
+});
+
+if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
+    http_response_code(405);
+    header('Allow: POST');
+    echo json_encode(['success' => false, 'message' => 'Use POST to log in.']);
+    exit();
+}
+
+if (!isset($_POST['employee_id'], $_POST['password'])
+    || !is_string($_POST['employee_id']) || !is_string($_POST['password'])
+    || trim($_POST['employee_id']) === '' || $_POST['password'] === '') {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'Enter your Employee ID and password.']);
+    exit();
+}
+
+if (!session_start()) {
+    throw new RuntimeException('Unable to start the login session. Check session storage permissions.');
+}
+
+require_once __DIR__ . '/../database/db.php';
 
 $db   = new Database();
 $conn = $db->getConnection();
-
-session_start();
-
-header('Content-Type: application/json');
 
 define('MAX_ATTEMPTS', 3);
 define('LOCKOUT_TIME', 60); // 60 seconds lockout
