@@ -24,7 +24,7 @@ For the enrollment page, edit `views/enrollment-form.php`, `assets/css/enrollmen
 
 Use the existing Apache/XAMPP configuration or `php -S 127.0.0.1:8095 -t .` for local development. Open `/pages/index.html`. Apache applies `.htaccess`, including legacy URL redirects and access restrictions for implementation/test directories; PHP's development server does not apply these rules.
 
-The existing MySQL schema is required (`payr_bcp` by default). No database migration was introduced. Optional environment variables are `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, and `DB_PASSWORD`; the existing local XAMPP defaults remain the fallback. PHP needs PDO MySQL, mbstring, and fileinfo. Uploads retain the existing 5 MB per-document limit; PHP's upload and request-size settings must allow the combined request.
+The existing MySQL schema is required (`payr_bcp` by default). No database migration was introduced. Database settings come from `../db_config.php`, shared with the employee login and enrollment module. Keep that file one level above the `web` folder when deploying. Optional overrides are `MYSQLHOST`, `MYSQLPORT`, `MYSQLDATABASE`, `MYSQLUSER`, and `MYSQLPASSWORD`, or `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, and `DB_PASSWORD`. For local XAMPP, set those variables to your local database settings. PHP needs PDO MySQL, mbstring, and fileinfo. Uploads retain the existing 5 MB per-document limit; PHP's upload and request-size settings must allow the combined request.
 
 The frontend libraries and compiled CSS are committed local assets. Node is only needed when rebuilding CSS:
 

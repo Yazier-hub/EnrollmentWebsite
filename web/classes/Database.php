@@ -12,24 +12,34 @@ class Database
     {
         if (!self::$attempted) {
             self::$attempted = true;
-            $host     = getenv('DB_HOST') ?: 'localhost';
-            $port     = getenv('DB_PORT') ?: '3306';
-            $dbname   = getenv('DB_NAME') ?: 'payr_bcp';
-            $username = getenv('DB_USER') !== false ? getenv('DB_USER') : 'root';
-            $password = getenv('DB_PASSWORD') !== false ? getenv('DB_PASSWORD') : '';
-
             try {
+                $configPath = dirname(__DIR__, 2) . '/db_config.php';
+                if (!is_readable($configPath)) {
+                    throw new RuntimeException('Database configuration is missing or unreadable: ' . $configPath);
+                }
+                $config = require $configPath;
+                if (!is_array($config)) {
+                    throw new RuntimeException('Database configuration must return an array: ' . $configPath);
+                }
+                foreach (['host', 'port', 'database', 'username', 'password'] as $key) {
+                    if (!array_key_exists($key, $config)) {
+                        throw new RuntimeException('Database configuration is missing key: ' . $key);
+                    }
+                }
+
+                $dsn = "mysql:host={$config['host']};port={$config['port']};"
+                    . "dbname={$config['database']};charset=utf8mb4";
                 self::$instance = new PDO(
-                    "mysql:host=$host;port=$port;dbname=$dbname;charset=utf8mb4",
-                    $username,
-                    $password,
+                    $dsn,
+                    $config['username'],
+                    $config['password'],
                     [
                         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
                         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                         PDO::ATTR_EMULATE_PREPARES   => false,
                     ]
                 );
-            } catch (PDOException $e) {
+            } catch (Throwable $e) {
                 error_log('Database connect failed: ' . $e->getMessage());
                 return null;
             }
