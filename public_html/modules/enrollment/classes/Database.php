@@ -22,6 +22,14 @@ class Database {
     private $transactionLevel = 0;
 
     private function __construct() {
+        // Load shared environment-variable settings and local defaults.
+        $config = require dirname(__DIR__, 4) . '/db_config.php';
+        $this->host = $config['host'];
+        $this->port = $config['port'];
+        $this->database = $config['database'];
+        $this->username = $config['username'];
+        $this->password = $config['password'];
+
         $this->options = [
             PDO::ATTR_ERRMODE               => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE    => PDO::FETCH_ASSOC,

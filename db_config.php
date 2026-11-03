@@ -8,5 +8,5 @@ return [
     'port'     => getenv('MYSQLPORT')     ?: (getenv('DB_PORT')     ?: '3306'),
     'database' => getenv('MYSQLDATABASE') ?: (getenv('DB_DATABASE') ?: 'payr_bcp'),
     'username' => getenv('MYSQLUSER')     ?: (getenv('DB_USERNAME') ?: 'payr_bestlink'),
-    'password' => getenv('MYSQLPASSWORD') ?: (getenv('DB_PASSWORD') ?: ''),
+    'password' => getenv('MYSQLPASSWORD') ?: (getenv('DB_PASSWORD') ?: '12345'),
 ];
