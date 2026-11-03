@@ -36,3 +36,40 @@ context.renderFreshmenSubjectsAutoSelected([
 ]);
 assert.equal(elements.scheduleIdsInput.value, '101', 'Ordinary applicant selection must continue to work');
 console.log('PASS: 7 applicant credit selection checks');
+
+// The modal must send applicant identity and display the server-computed placement.
+async function checkPlacementRequest() {
+    const start = source.indexOf('function loadAvailableSections(');
+    const end = source.indexOf('\nfunction loadSubjectsForSection(', start);
+    assert(start >= 0 && end > start);
+    const elements = {
+        sectionSelect: { innerHTML: '', appendChild() {} },
+        sectionInfo: { innerHTML: '', style: {} },
+        subjectsSection: { style: {} }
+    };
+    let requestedUrl;
+    let selectedSection;
+    let response = { success: true, year_level: 2, semester: 1,
+        data: [{ id: 43, section_code: 'YEAR2', grade_level: '2nd Year', semester: '1st Semester' }] };
+    const context = vm.createContext({
+        baseUrl: '/enrollment', currentApplicantId: 101,
+        document: { getElementById: id => elements[id], createElement: () => ({}) },
+        fetch: async url => { requestedUrl = url; return { ok: true, json: async () => response }; },
+        loadSubjectsForSection: id => { selectedSection = id; }, console
+    });
+    vm.runInContext(source.slice(start, end), context);
+    context.loadAvailableSections(10, 1, 1);
+    await new Promise(resolve => setImmediate(resolve));
+    assert.match(requestedUrl, /applicant_id=101/);
+    assert.match(elements.sectionInfo.innerHTML, /2nd Year - 1st Semester/);
+    assert.equal(selectedSection, 43);
+    selectedSection = null;
+    response = { success: true, data: [], placement: { curriculum_completed: true }, message: 'All curriculum subjects are already credited.' };
+    context.loadAvailableSections(10, 1, 1);
+    await new Promise(resolve => setImmediate(resolve));
+    assert.equal(selectedSection, null);
+    assert.equal(elements.sectionInfo.textContent, response.message);
+    assert.equal(elements.subjectsSection.style.display, 'none');
+    console.log('PASS: applicant placement request and completed-curriculum display');
+}
+checkPlacementRequest().catch(error => { console.error(error); process.exitCode = 1; });

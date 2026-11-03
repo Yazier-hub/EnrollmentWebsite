@@ -970,7 +970,15 @@ class ApplicationController {
             }
         }
 
-        $sections = $this->section->getSectionsByCourseAndYearLevel(
+        require_once __DIR__ . '/TransferCredit.php';
+        $placement = (new TransferCredit())->getPlacementForApplicant((int) $applicantId);
+        if ($placement !== null) {
+            $yearLevel = $placement['year_level'];
+            $semester = $placement['semester'];
+            $yearLevelText = $placement['grade_level'];
+            $semesterText = $placement['semester_name'];
+        }
+        $sections = !empty($placement['curriculum_completed']) ? [] : $this->section->getSectionsByCourseAndYearLevel(
             $applicant['course_id'],
             $yearLevelText,
             $semesterText

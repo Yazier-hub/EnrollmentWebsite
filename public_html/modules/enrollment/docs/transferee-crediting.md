@@ -4,11 +4,13 @@ Regis owns subject evaluation, equivalency decisions, and credit approval. Enrol
 
 Credits are linked through:
 
-`rgr_student_credited_subjects.evaluation_id -> rgr_student_subject_evaluations.id -> applicant_id`
+`rgr_student_subject_evaluations.applicant_id -> enr_applicants.applicant_id`
 
 Enrollment reads credits by applicant ID before conversion. After conversion, it resolves `enr_students.applicant_id` to the same credits. The evaluation's optional `student_id` can remain NULL; no backfill or schema migration is required.
 
-Only an approved evaluation with a matching credit record and curriculum subject is recognized. Credits must belong to the applicant/student's course, including older curricula. Enrollment excludes credited subjects from automatic loading, recognizes them as completed for prerequisites, and prevents repeat enrollment. Year placement and other enrollment requirements retain their existing rules.
+An approved evaluation with a matching curriculum subject is recognized directly. A separate `rgr_student_credited_subjects` row is not required: Regis can save approved evaluations without creating that row. Pending and rejected evaluations never count, even if a separate credit row exists. Credits must belong to the applicant/student's course, including older curricula. Enrollment excludes credited subjects from automatic loading, recognizes them as completed for prerequisites, and prevents repeat enrollment.
+
+For transferee applicants with approved credits, placement is the earliest term in the active course curriculum that still contains an uncredited subject. A fully credited first semester advances to the second semester; a fully credited year advances to the next curriculum year level. Partial credits do not skip unfinished terms. An absent matching section does not fall back to a completed semester. If the entire curriculum is credited, no section is offered. Conversion rechecks placement so a stale selection cannot assign the wrong term. This does not change the active calendar school year or rewrite existing enrollments; other enrollment requirements retain their existing rules.
 
 The Enrollment Requirements page continues to manage its existing requirements checklist. Subject evaluation and approval are performed in Regis.
 

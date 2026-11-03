@@ -29,6 +29,11 @@ $baseUrl = PageAssets::baseUrl();
 <!-- Shared header clock -->
 
 <header class="top-bar">
+    <button type="button" class="hamburger" aria-label="Toggle navigation" aria-controls="enrollment-sidebar" aria-expanded="true">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+    </button>
     <div class="realtime" id="realtimeClock" aria-live="polite">
         --:--
     </div>

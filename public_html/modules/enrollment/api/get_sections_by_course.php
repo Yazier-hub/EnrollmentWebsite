@@ -58,6 +58,26 @@ try {
     $db      = Database::getInstance();
     $section = new Section();
 
+    $placement = null;
+    if (!empty($_GET['applicant_id'])) {
+        $owner = $db->prepare('SELECT course_id FROM enr_applicants WHERE applicant_id = ?');
+        $owner->execute([(int) $_GET['applicant_id']]);
+        if ((int) $owner->fetchColumn() !== $courseId) {
+            throw new InvalidArgumentException('Applicant not found for this course.');
+        }
+        require_once $basePath . '/classes/TransferCredit.php';
+        $placement = (new TransferCredit())->getPlacementForApplicant((int) $_GET['applicant_id']);
+        if ($placement !== null) {
+            if ($placement['curriculum_completed']) {
+                echo json_encode(['success' => true, 'data' => [], 'count' => 0,
+                    'placement' => $placement, 'message' => 'All curriculum subjects are already credited.']);
+                return;
+            }
+            $yearLevel = $placement['year_level'];
+            $semester = $placement['semester'];
+        }
+    }
+
     // ------------------------------------------------------------
     // Resolve active school year (for scoping student counts)
     // ------------------------------------------------------------
@@ -118,30 +138,28 @@ try {
     // ============================================================
     if ($semester > 0) {
         // Find the actual ID in the database for this semester
-        $semText = ($semester === 1) ? '%1st Semester%' : '%2nd Semester%';
-        
-        $semSql = "SELECT id FROM rgr_semesters WHERE name LIKE ?";
-        $semParams = [$semText];
+        $semSql = "SELECT id FROM rgr_semesters WHERE LOWER(TRIM(name)) IN (?, ?, ?, ?, ?, ?, ?)";
+        $semParams = $semester === 1
+            ? ['1', '1st', '1st sem', '1st semester', 'first', 'first sem', 'first semester']
+            : ['2', '2nd', '2nd sem', '2nd semester', 'second', 'second sem', 'second semester'];
 
         // Scope to active school year if we have it
         if ($activeSchoolYearId !== null) {
             $semSql .= " AND school_year_id = ?";
             $semParams[] = $activeSchoolYearId;
         }
-        $semSql .= " LIMIT 1";
 
         $semStmt = $db->prepare($semSql);
         $semStmt->execute($semParams);
-        $semRow = $semStmt->fetch(PDO::FETCH_ASSOC);
+        $semesterIds = $semStmt->fetchAll(PDO::FETCH_COLUMN);
 
-        if ($semRow) {
+        if ($semesterIds) {
             // Match the correct database ID (e.g., 13 for 1st, 14 for 2nd)
-            $sql .= " AND s.semester_id = ?";
-            $params[] = (int) $semRow['id'];
+            $sql .= ' AND s.semester_id IN (' . implode(',', array_fill(0, count($semesterIds), '?')) . ')';
+            $params = array_merge($params, $semesterIds);
         } else {
-            // Fallback if no semester record found (unlikely)
-            $sql .= " AND s.semester_id = ?";
-            $params[] = $semester;
+            // A term number is not a semester database ID; do not match an unrelated term.
+            $sql .= ' AND 1 = 0';
         }
     }
 
@@ -239,6 +257,7 @@ try {
         'course_id'      => $courseId,
         'year_level'     => $yearLevel,
         'semester'       => $semester,
+        'placement'      => $placement,
         'only_available' => $onlyAvailable,
         'max_students'   => $MAX_STUDENTS,
         'school_year_id' => $activeSchoolYearId,

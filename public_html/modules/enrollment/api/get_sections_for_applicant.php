@@ -98,13 +98,18 @@ try {
     // ------------------------------------------------------------
     // Sections
     // ------------------------------------------------------------
-    $availableSections = $section->getSectionsByCourseAndYearLevel(
+    $placement = (new TransferCredit())->getPlacementForApplicant($applicantId);
+    if ($placement !== null) {
+        $yearLevel = $placement['grade_level'];
+        $semester = $placement['semester_name'];
+    }
+    $availableSections = !empty($placement['curriculum_completed']) ? [] : $section->getSectionsByCourseAndYearLevel(
         $applicant['course_id'],
         $yearLevel,
         $semester
     );
 
-    if (empty($availableSections)) {
+    if (empty($availableSections) && $placement === null) {
         $alternateSemester = ($semester === '1st Semester') ? '2nd Semester' : '1st Semester';
         $availableSections = $section->getSectionsByCourseAndYearLevel(
             $applicant['course_id'],
@@ -230,16 +235,17 @@ try {
     // Map: section_id => [subject_id => schedule_id]
     $schedulesBySection = [];
 
-    if (!empty($sectionIds) && $schoolYearId !== null && $semesterId !== null) {
+    if (!empty($sectionIds)) {
         try {
             $ph = implode(',', array_fill(0, count($sectionIds), '?'));
 
             $schedSql = "SELECT cs.section_id, cs.id AS schedule_id, cs.subject_id
                          FROM cc_schedule cs
+                         JOIN cc_sections sec ON sec.id = cs.section_id
                          WHERE cs.section_id IN ($ph)
-                           AND cs.school_year_id = ?
-                           AND cs.semester_id = ?";
-            $schedParams = array_merge($sectionIds, [$schoolYearId, $semesterId]);
+                           AND cs.school_year_id = sec.school_year_id
+                           AND cs.semester_id = sec.semester_id";
+            $schedParams = $sectionIds;
 
             $schedStmt = $db->prepare($schedSql);
             $schedStmt->execute($schedParams);

@@ -168,12 +168,22 @@ function loadAvailableSections(courseId, yearLevel, semester) {
             + '?course_id='       + encodeURIComponent(courseId)
             + '&year_level='      + encodeURIComponent(yearLevel || 1)
             + '&semester='        + encodeURIComponent(semester || 1)
-            + '&only_available=1';
+            + '&only_available=1'
+            + '&applicant_id=' + encodeURIComponent(currentApplicantId);
 
     fetch(url)
         .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
         .then(function (data) {
             select.innerHTML = '<option value="">Choose a section</option>';
+
+            yearLevel = Number(data.year_level || yearLevel || 1);
+            semester = Number(data.semester || semester || 1);
+            if (data.placement && data.placement.curriculum_completed) {
+                select.innerHTML = '<option value="">All subjects credited</option>';
+                info.textContent = data.message;
+                document.getElementById('subjectsSection').style.display = 'none';
+                return;
+            }
 
             if (data.success && Array.isArray(data.data) && data.data.length > 0) {
                 var yearText = (yearLevel === 1) ? '1st Year'
@@ -204,6 +214,10 @@ function loadAvailableSections(courseId, yearLevel, semester) {
             } else {
                 select.innerHTML = '<option value="">No sections available</option>';
                 info.innerHTML = '⚠️ Walang section na may bakante.';
+                if (data.placement) {
+                    info.textContent = 'Walang available section para sa '
+                        + data.placement.grade_level + ' - ' + data.placement.semester_name + '.';
+                }
                 info.style.color = '#0f2a4e';
                 document.getElementById('subjectsSection').style.display = 'none';
             }

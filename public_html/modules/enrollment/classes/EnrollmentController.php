@@ -1561,7 +1561,13 @@ class EnrollmentController {
                 }
             }
 
-            $sections = $this->section->getSectionsByCourseAndYearLevel(
+            require_once __DIR__ . '/TransferCredit.php';
+            $placement = (new TransferCredit())->getPlacementForApplicant((int) $applicantId);
+            if ($placement !== null) {
+                $yearLevel = $placement['grade_level'];
+                $semester = $placement['semester_name'];
+            }
+            $sections = !empty($placement['curriculum_completed']) ? [] : $this->section->getSectionsByCourseAndYearLevel(
                 $applicantData['course_id'],
                 $yearLevel,
                 $semester

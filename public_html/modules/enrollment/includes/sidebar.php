@@ -10,7 +10,7 @@
 /** @var array<string, string> $typeIcons */
 /** @var PageController|null $pageController */
 ?>
-<aside class="sidebar">
+<aside class="sidebar" id="enrollment-sidebar">
     <div class="school-logo">
         <img src="<?= htmlspecialchars($logoUrl) ?>" alt="School Logo">
         <div class="sidebar-icons">

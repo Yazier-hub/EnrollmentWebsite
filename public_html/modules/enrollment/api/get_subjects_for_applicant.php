@@ -25,6 +25,7 @@ try {
     require_once $basePath . '/classes/Application.php';
     require_once $basePath . '/classes/Section.php';
     require_once $basePath . '/classes/Course.php';
+    require_once $basePath . '/classes/TransferCredit.php';
 
     if (!isset($_GET['applicant_id']) || empty($_GET['applicant_id'])) {
         echo json_encode([
@@ -98,7 +99,12 @@ try {
     /* ------------------------------------------------------------
        Sections (with alternate-semester fallback)
     ------------------------------------------------------------ */
-    $sections = $section->getSectionsByCourseAndYearLevel(
+    $placement = (new TransferCredit())->getPlacementForApplicant($applicantId);
+    if ($placement !== null) {
+        $yearLevel = $placement['grade_level'];
+        $semester = $placement['semester_name'];
+    }
+    $sections = !empty($placement['curriculum_completed']) ? [] : $section->getSectionsByCourseAndYearLevel(
         $applicant['course_id'],
         $yearLevel,
         $semester
@@ -108,7 +114,7 @@ try {
         $sections = [];
     }
 
-    if (empty($sections)) {
+    if (empty($sections) && $placement === null) {
         $alternateSemester = ($semester === '1st Semester') ? '2nd Semester' : '1st Semester';
         $alternate = $section->getSectionsByCourseAndYearLevel(
             $applicant['course_id'],

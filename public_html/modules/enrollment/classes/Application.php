@@ -258,7 +258,21 @@ class Application extends Model {
 
             require_once __DIR__ . '/Section.php';
             $sectionModel = new Section();
-            $section      = $sectionModel->findById($sectionId);
+            $section      = $sectionModel->getSectionDetails($sectionId);
+
+            require_once __DIR__ . '/TransferCredit.php';
+            $placement = (new TransferCredit($this->connection))->getPlacementForApplicant((int) $applicantId);
+            if ($placement !== null) {
+                if ($placement['curriculum_completed']) {
+                    throw new Exception('All curriculum subjects are already credited.');
+                }
+                if (!$section || (int) $section['program_id'] !== (int) $applicant['course_id']
+                    || (int) $section['grade_level'] !== $placement['year_level']
+                    || $sectionModel->normalizeSemester($section['semester']) !== ($placement['semester'] === 1 ? 'First' : 'Second')) {
+                    throw new Exception('Approved credits place this transferee in ' . $placement['grade_level']
+                        . ' - ' . $placement['semester_name'] . '. Please reload and select a matching section.');
+                }
+            }
 
             $yearLevel = 1;
             if ($section && isset($section['grade_level'])) {

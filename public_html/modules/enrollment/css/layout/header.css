@@ -21,7 +21,10 @@ header i {
 }
 
 .hamburger {
-    display: flex !important;
+    display: flex;
+    border: 0;
+    background: transparent;
+    flex-shrink: 0;
     flex-direction: column;
     gap: 4px;
     cursor: pointer;
@@ -41,6 +44,23 @@ header i {
 
 .hamburger:hover span {
     background: var(--color1);
+}
+
+.hamburger:focus-visible {
+    outline: 2px solid var(--color1);
+    outline-offset: 3px;
+}
+
+.hamburger.active span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
 }
 
 @media (max-width: 768px) {
